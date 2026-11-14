@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MINTUNEX | MN Enterprises</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        body { background-color: #faf9f6; color: #333; }
+
+        /* Header Layout Styling */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 5%;
+            background-color: #fff;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .logo { font-size: 22px; font-weight: 600; color: #2c2a29; letter-spacing: 0.5px; }
+      header p{
+        font-size:12px;
+      }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #444;
+            font-weight: 500;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: color 0.3s;
+        }
+
+        .nav-links a i { color: #bfa181; font-size: 13px; }
+        .nav-links a:hover { color: #bfa181; }
+
+        .shop-highlight-btn {
+            background-color: #2c2a29;
+            color: #fff !important;
+            padding: 8px 16px;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+        .shop-highlight-btn i { color: #fff !important; }
+        .shop-highlight-btn:hover { background-color: #bfa181 !important; transform: translateY(-2px); }
+
+        .nav-right { display: flex; align-items: center; gap: 20px; }
+        .admin-toggle-btn {
+            background: #2c2a29; color: #fff; border: none; padding: 8px 14px; border-radius: 4px; cursor: pointer; font-size: 13px;
+        }
+        .admin-toggle-btn:hover { background: #bfa181; }
+
+        .nav-icons { font-size: 18px; cursor: pointer; position: relative; }
+        .cart-count {
+            position: absolute; top: -8px; right: -10px; background: #bfa181; color: #fff; font-size: 11px; padding: 2px 6px; border-radius: 50%;
+        }
+
+        /* Admin Panel */
+        .admin-panel {
+            max-width: 600px; margin: 20px auto; background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); display: none;
+        }
+        .admin-panel.active { display: block; }
+        .admin-panel h3 { margin-bottom: 15px; font-size: 18px; color: #2c2a29; }
+        .admin-form-group { margin-bottom: 12px; }
+        .admin-form-group input, .admin-form-group select {
+            width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px; font-size: 14px;
+        }
+        .save-prod-btn { background: #bfa181; color: #fff; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; font-weight: 500; }
+
+        /* Home Banner */
+        .home-page-container { display: block; margin-bottom: 20px; }
+        .hero-banner {
+            height: 380px;
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;
+            border-radius: 12px; display: flex; align-items: center; justify-content: center; text-align: center; color: #fff; padding: 0 20px; margin: 20px 5%; box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        .hero-text h2 { font-size: 30px; font-weight: 600; margin-bottom: 10px; }
+        .hero-text p { font-size: 14px; margin-bottom: 20px; font-weight: 300; max-width: 600px; margin-left: auto; margin-right: auto; }
+        .hero-btn { background-color: #bfa181; color: #fff; border: none; padding: 12px 28px; border-radius: 4px; font-size: 14px; font-weight: 500; cursor: pointer; transition: background 0.3s; }
+        .hero-btn:hover { background-color: #2c2a29; }
+
+        /* Shop Filter Bar */
+        .shop-filter-bar {
+            max-width: 1200px; margin: 0 auto 25px auto; padding: 0 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;
+        }
+        .search-box { position: relative; flex: 1; min-width: 250px; }
+        .search-box i { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: #888; }
+        .search-box input {
+            width: 100%; padding: 12px 15px 12px 45px; border: 1px solid #ddd; border-radius: 30px; outline: none; font-size: 14px; background: #fff;
+        }
+        .sort-box select { padding: 12px 20px; border: 1px solid #ddd; border-radius: 30px; outline: none; font-size: 14px; background: #fff; cursor: pointer; }
+
+        /* Categories Filter */
+        .categories { display: flex; justify-content: center; gap: 10px; margin: 20px 0 30px 0; flex-wrap: wrap; padding: 0 15px; }
+        .cat-btn { background: #fff; border: 1px solid #ddd; padding: 8px 18px; border-radius: 20px; cursor: pointer; font-size: 13px; transition: all 0.3s; }
+        .cat-btn.active, .cat-btn:hover { background: #2c2a29; color: #fff; border-color: #2c2a29; }
+
+        /* Product Grid & Cards */
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px 60px; }
+        .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 30px; }
+        .product-card {
+            background: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.04); transition: all 0.3s ease; border: 1px solid #f0efeb;
+        }
+        .product-card:hover { transform: translateY(-5px); box-shadow: 0 8px 25px rgba(0,0,0,0.08); }
+        .product-image-container { position: relative; height: 260px; width: 100%; overflow: hidden; }
+        .product-image { height: 100%; width: 100%; object-fit: cover; transition: transform 0.5s ease; }
+        .product-card:hover .product-image { transform: scale(1.05); }
+        .product-badge {
+            position: absolute; top: 12px; left: 12px; background: #2c2a29; color: #fff; font-size: 10px; padding: 4px 10px; border-radius: 4px; text-transform: uppercase;
+        }
+        .product-info { padding: 20px; text-align: center; }
+        .product-title { font-size: 15px; font-weight: 600; margin-bottom: 5px; color: #333; }
+        .product-price { color: #bfa181; font-size: 16px; font-weight: 600; margin-bottom: 12px; }
+        
+        .add-to-cart {
+            background-color: #2c2a29; color: #fff; border: none; padding: 10px 20px; width: 100%; border-radius: 4px; cursor: pointer; font-size: 13px;margin-top:3px; transition: 0.3s;
+        }
+        .add-to-cart:hover { background-color: #bfa181; transform: translateY(-10px);}
+
+        .product-link {
+            display: block; background-color: #2c2a29; color: #fff !important; border: none; padding: 10px 20px; width: 100%; border-radius: 4px; text-decoration: none !important; text-align: center; cursor: pointer; font-size: 13px; font-weight: 500; margin-top: 15px ;transition:0.3s;
+        }
+        .product-link:hover { background-color: #bfa181; transform: translateY(-10px); }
+
+        /* Cart Sidebar & Modals Styling */
+        .cart-modal {
+            position: fixed; top: 0; right: -400px; width: 380px; height: 100%; background: #fff; box-shadow: -5px 0 15px rgba(0,0,0,0.1); transition: right 0.3s ease; z-index: 1000; display: flex; flex-direction: column;
+        }
+        .cart-modal.open { right: 0; }
+        
+        .about-modal, .cat-modal {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); display: flex; justify-content: center; align-items: center; z-index: 2000; opacity: 0; visibility: hidden; transition: all 0.3s ease;
+        }
+        .about-modal.open, .cat-modal.open { opacity: 1; visibility: visible; }
+        
+        .modal-box { background: #fff; width: 90%; max-width: 500px; border-radius: 8px; overflow: hidden; box-shadow: 0 5px 20px rgba(0,0,0,0.2); }
+        .modal-header { background: #2c2a29; color: #fff; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; }
+        .modal-header i { cursor: pointer; font-size: 18px; }
+        .modal-body { padding: 25px; font-size: 14px; color: #333; line-height: 1.6; }
+
+        /* NEW CATEGORY MODAL GRID STYLING */
+        .cat-content { background: #fff; width: 90%; max-width: 600px; border-radius: 10px; overflow: hidden; box-shadow: 0 5px 25px rgba(0,0,0,0.2); }
+        .cat-header-box { background: #2c2a29; color: #fff; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; }
+        .close-cat-modal { cursor: pointer; font-size: 18px; }
+        .cat-body-grid { padding: 20px; display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 15px; max-height: 70vh; overflow-y: auto; }
+        .cat-item-card { background: #faf9f6; border: 1px solid #eee; padding: 15px; border-radius: 8px; text-align: center; cursor: pointer; transition: all 0.3s; }
+        .cat-item-card:hover { background: #2c2a29; color: #fff; transform: translateY(-3px); }
+        .cat-item-card i { font-size: 24px; color: #bfa181; margin-bottom: 8px; }
+        .cat-item-card h4 { font-size: 14px; margin-bottom: 5px; }
+        .cat-item-card p { font-size: 11px; color: #666; }
+        .cat-item-card:hover p { color: #ddd; }
+
+        .cart-header { padding: 20px; background: #2c2a29; color: #fff; display: flex; justify-content: space-between; align-items: center; }
+        .cart-items { flex: 1; overflow-y: auto; padding: 20px; }
+        .cart-item { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 10px; }
+        .cart-footer { padding: 20px; background: #f9f9f9; border-top: 1px solid #ddd; }
+        .checkout-btn { background: #bfa181; color: #fff; border: none; width: 100%; padding: 12px; border-radius: 4px; cursor: pointer; font-weight: 500; margin-top: 10px; }
+      .btn:hover{
+        background-color:red;
+        color:white;
+      }
+      /* Delete button shuru mein hidden rahega */
+.product-card .delete-btn {
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+      
+
+/* Jab product card par mouse/hover karenge toh button dikhne lagega */
+.product-card:hover .delete-btn {
+    opacity: 1;
+    visibility: visible;
+}
+      /* ==========================================
+   1. COMPUTER / LAPTOP (Default Desktop View)
+   ================================---------- */
+.product-grid {
+    grid-template-columns: repeat(4, 1fr); /* Computer par 4 columns */
+}
+
+
+/* ==========================================
+   2. TABLET VIEW (Screen: 768px se 1024px)
+   ================================---------- */
+@media (min-width: 768px) and (max-width: 1024px) {
+    header {
+        padding: 15px 30px;
+    }
+    
+    .product-grid {
+        grid-template-columns: repeat(3, 1fr); /* Tablet par 3 columns */
+        gap: 20px;
+    }
+
+    .hero-banner {
+        height: 320px;
+        margin: 20px 30px;
+    }
+}
+
+
+/* ==========================================
+   3. PHONE / MOBILE VIEW (Screen: 767px se kam)
+   ================================---------- */
+@media (max-width: 767px) {
+    /* Header ko vertical stack karo taaki bahar na nikle */
+    header {
+        flex-direction: column;
+        padding: 12px 15px;
+        gap: 10px;
+    }
+
+    .nav-links {
+        gap: 15px;
+        font-size: 12px;
+    }
+
+    /* Hero Banner chota karo */
+    .hero-banner {
+        height: 220px;
+        margin: 10px 15px;
+        padding: 0 15px;
+    }
+
+    .hero-text h2 {
+        font-size: 20px;
+    }
+
+    .hero-text p {
+        font-size: 12px;
+    }
+
+    /* Search aur Sort bar */
+    .shop-filter-bar {
+        flex-direction: column;
+        padding: 0 15px;
+        gap: 10px;
+    }
+
+    .search-box, .sort-box select {
+        width: 100%;
+        min-width: 100%;
+    }
+
+    /* Products grid: Phone par 2 columns side-by-side */
+    .container {
+        padding: 0 10px 40px;
+    }
+
+    .product-grid {
+        grid-template-columns: repeat(2, 1fr); 
+        gap: 12px;
+    }
+
+    .product-image-container {
+        height: 160px; /* Mobile par image ki height adjust */
+    }
+
+    .product-title {
+        font-size: 13px;
+    }
+
+    .product-price {
+        font-size: 14px;
+    }
+
+    /* Cart Sidebar mobile par poori screen le lega */
+    .cart-modal {
+        width: 100%;
+        right: -100%;
+    }
+    .cart-modal.open {
+        right: 0;
+    }
+}
+/* ==========================================
+   MODERN TOAST NOTIFICATION STYLING
+   ================================---------- */
+#toast-container {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.toast {
+    background: #1a1a1a;
+    color: #fff;
+    padding: 12px 18px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-family: inherit;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: slideInUp 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards, 
+               fadeOutDown 0.3s 2.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.toast.success {
+    border-left: 4px solid #4ade80;
+}
+
+.toast.error {
+    border-left: 4px solid #f87171;
+}
+
+@keyframes slideInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeOutDown {
+    from {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    to {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+}
+
+
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <div class="logo">MINTUNEX <p>MN Enterprises</p></div>
+      
+        <ul class="nav-links">
+            <li><a href="#" onclick="showHomePage()"><i class="fa-solid fa-house"></i> Home</a></li>
+            <li><a href="#shop" class="shop-highlight-btn"><i class="fa-solid fa-bag-shopping"></i> Shop</a></li>
+            <li><a href="#" onclick="toggleCategoryModal()"><i class="fa-solid fa-list"></i> Category</a></li>
+            <li><a href="#" onclick="toggleAboutModal()"><i class="fa-solid fa-circle-info"></i> About Us</a></li>
+        </ul>
+        <div class="nav-right">
+            <button class="admin-toggle-btn" onclick="toggleAdminPanel()">+ Add Product</button>
+            <div class="nav-icons" onclick="toggleCart()">
+                <i class="fa-solid fa-bag-shopping"></i>
+                <span class="cart-count" id="cartCount">0</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Admin Panel -->
+    <div class="container">
+        <div class="admin-panel" id="adminPanel">
+            <h3>Add New Product to Store</h3>
+            <div class="admin-form-group"><input type="text" id="prodName" placeholder="Product Name"></div>
+            <div class="admin-form-group">
+                <select id="prodCategory">
+                    <option value="Vases">Vases</option>
+                    <option value="Lighting">Lighting</option>
+                    <option value="Wall Art">Wall Art</option>
+                    <option value="Electronics">Electronics</option>
+                    <option value="Beauty products">Beauty products</option>
+                </select>
+            </div>
+            <div class="admin-form-group"><input type="number" id="prodPrice" placeholder="Price in ₹"></div>
+            <div class="admin-form-group"><input type="text" id="prodImage" placeholder="Image URL"></div>
+            <div class="admin-form-group"><input type="text" id="prodLink" placeholder="Shop Now Link (URL)"></div>
+            <button class="save-prod-btn" onclick="addNewProduct()">Publish Product</button>
+        </div>
+    </div>
+
+    <!-- Home Banner View -->
+    <div id="homePageView" class="home-page-container">
+        <div class="hero-banner">
+            <div class="hero-text">
+                <h2>Transform Your Space with Elegance</h2>
+                <p>Discover minimalist home decor, smart electronics, and aesthetic lifestyle essentials.</p>
+                <button class="hero-btn" onclick="scrollToShop()">Explore Collection</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Search & Sort Filter Bar -->
+    <div class="shop-filter-bar" id="shop">
+        <div class="search-box">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" id="searchInput" placeholder="Search products..." onkeyup="searchProducts()">
+        </div>
+        <div class="sort-box">
+            <select id="sortSelect" onchange="sortProducts()">
+                <option value="default">Sort by: Featured</option>
+                <option value="low-high">Price: Low to High</option>
+                <option value="high-low">Price: High to Low</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- Categories Filter Bar -->
+    <div class="categories" id="categoryContainer">
+        <button class="cat-btn active" onclick="filterProducts('All')">All Products</button>
+        <button class="cat-btn" onclick="filterProducts('Vases')">Vases</button>
+        <button class="cat-btn" onclick="filterProducts('Lighting')">Lighting</button>
+        <button class="cat-btn" onclick="filterProducts('Wall Art')">Wall Art</button>
+        <button class="cat-btn" onclick="filterProducts('Electronics')">Electronics</button>
+        <button class="cat-btn" onclick="filterProducts('Beauty products')">Beauty products</button>
+    </div>
+
+    <!-- Product Grid -->
+    <div class="container">
+        <div class="product-grid" id="productGrid"></div>
+    </div>
+
+    <!-- Cart Sidebar -->
+    <div class="cart-modal" id="cartModal">
+        <div class="cart-header">
+            <h3>Your Shopping Cart</h3>
+            <i class="fa-solid fa-xmark" onclick="toggleCart()" style="cursor:pointer;"></i>
+        </div>
+        <div class="cart-items" id="cartItems">
+            <p style="color: #777; text-align: center; margin-top: 40px;">Your cart is empty</p>
+        </div>
+        <div class="cart-footer">
+            <h4 id="cartTotal">Total: ₹0</h4>
+            <button class="checkout-btn" onclick="checkout()">Proceed to Checkout</button>
+        </div>
+    </div>
+
+    <!-- About Us Modal -->
+    <div class="about-modal" id="aboutModal">
+    <div class="modal-box">
+        <div class="modal-header">
+            <h3>About MINTUNEX</h3>
+            <i class="fa-solid fa-xmark close-about" onclick="toggleAboutModal()"></i>
+        </div>
+        <div class="modal-body">
+            <h4>Welcome to MN Enterprises</h4>
+            <p>At <strong>MINTUNEX</strong>, we bring you a curated collection of aesthetic, minimal, and premium lifestyle products to elevate your everyday living space.</p>
+            <br>
+            <p>✨ <strong>Our Mission:</strong> To provide high-quality home decor items, beauty products,electrical products, and lifestyle essentials that blend modern design with unmatched durability and elegance.</p>
+            <br>
+            <p>📦 <strong>Why Choose Us?</strong></p>
+            <ul style="text-align: left; margin-left: 20px; font-size: 13px; color: #555;">
+                <li>Handpicked aesthetic designs for modern homes</li>
+                <li>Secure online shopping & fast delivery</li>
+                <li>Dedicated customer support</li>
+            </ul>
+        </div>
+    </div>
+ </div>
+
+
+    <!-- UPDATED CATEGORY MODAL WITH CARDS -->
+    <div class="cat-modal" id="categoryModal">
+        <div class="cat-content">
+            <div class="cat-header-box">
+                <h3>Explore Our Categories</h3>
+                <i class="fa-solid fa-xmark close-cat-modal" onclick="toggleCategoryModal()"></i>
+            </div>
+            <div class="cat-body-grid">
+                <div class="cat-item-card" onclick="selectCategory('Vases')">
+                    <i class="fa-solid fa-wine-bottle"></i>
+                    <h4>Vases</h4>
+                    <p>Aesthetic ceramic & glass vases for home decor.</p>
+                </div>
+                <div class="cat-item-card" onclick="selectCategory('Lighting')">
+                    <i class="fa-solid fa-lightbulb"></i>
+                    <h4>Lighting</h4>
+                    <p>Nordic table lamps & modern pendant lights.</p>
+                </div>
+                <div class="cat-item-card" onclick="selectCategory('Wall Art')">
+                    <i class="fa-solid fa-image"></i>
+                    <h4>Wall Art</h4>
+                    <p>Abstract canvas paintings & minimalist frames.</p>
+                </div>
+                <div class="cat-item-card" onclick="selectCategory('Electronics')">
+                    <i class="fa-solid fa-plug"></i>
+                    <h4>Electronics</h4>
+                    <p>Smart gadgets & modern utility essentials.</p>
+                </div>
+                <div class="cat-item-card" onclick="selectCategory('Beauty products')">
+                    <i class="fa-solid fa-spray-can-sparkles"></i>
+                    <h4>Beauty Products</h4>
+                    <p>Glow essentials and premium care items.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getFirestore, collection, getDocs, addDoc, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyAzGvExTsHZO0jnPuLmE57BSZSS7PP1hDw",
+        authDomain: "mintunex---mn-enterprises.firebaseapp.com",
+        projectId: "mintunex---mn-enterprises",
+        storageBucket: "mintunex---mn-enterprises.firebasestorage.app",
+        messagingSenderId: "489419086086",
+        appId: "1:489419086086:web:6cf6e5bfbed6c192b06687"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    // 1. Sabse pehle default products se screen turant bhar do taaki blank na dikhe
+    let products = [
+        { id: "1", name: "Minimalist Ceramic Vase", category: "Vases", price: 1299, image: "https://images.unsplash.com/photo-1581783342308-f792dbdd27c5?auto=format&fit=crop&w=600&q=80", link: "#" },
+        { id: "2", name: "Nordic Wooden Table Lamp", category: "Lighting", price: 1899, image: "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=600&q=80", link: "#" },
+        { id: "3", name: "Abstract Canvas Wall Art", category: "Wall Art", price: 2499, image: "https://images.unsplash.com/photo-1538688525198-9b88f6f53126?auto=format&fit=crop&w=600&q=80", link: "#" }
+    ];
+
+    let savedCart = localStorage.getItem('mintunex_cart');
+    let cart = savedCart ? JSON.parse(savedCart) : [];
+    let currentCategory = 'All';
+
+    // Page khulte hi turant default products dikha do
+    document.addEventListener("DOMContentLoaded", () => {
+        filterProducts('All');
+        updateCartUI();
+        fetchProductsFromCloud(); // Background mein cloud se connect karne ki koshish karega
+    });
+
+    // Background Cloud Fetch (Bina UI roke)
+    async function fetchProductsFromCloud() {
+        try {
+            const querySnapshot = await getDocs(collection(db, "products"));
+            if (!querySnapshot.empty) {
+                let cloudProducts = [];
+                querySnapshot.forEach((docSnap) => {
+                    cloudProducts.push({ id: docSnap.id, ...docSnap.data() });
+                });
+                products = cloudProducts; // Cloud ka data milte hi list update kar do
+                filterProducts(currentCategory);
+            }
+        } catch (error) {
+            console.log("Using local/default products due to network restriction.");
+        }
+    }
+
+    window.displayProducts = function(filteredProducts) {
+        const grid = document.getElementById('productGrid');
+        if (!grid) return;
+        grid.innerHTML = "";
+        
+        if(!filteredProducts || filteredProducts.length === 0) {
+            grid.innerHTML = `<p style="grid-column: 1/-1; text-align: center; color: #777; padding: 40px;">No products found.</p>`;
+            return;
+        }
+
+        filteredProducts.forEach(product => {
+            grid.innerHTML += `
+                <div class="product-card">
+                    <div class="product-image-container">
+                        <span class="product-badge">${product.category}</span>
+                        <img src="${product.image}" alt="${product.name}" class="product-image">
+                        <button class="delete-btn" onclick="deleteProduct(${product.id})" title="Delete Product" style="position: absolute; top: 10px; right: 10px; background: rgba(0,0,0,0.6); color: #fff; border: none; width: 30px; height: 30px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 12px; transition: background 0.3s; z-index: 10;" onmouseover="this.style.background='#ff4d4d'" onmouseout="this.style.background='rgba(0,0,0,0.6)'">
+                    <i class="fa-solid fa-trash"></i>
+                </button>
+                  </div>
+                        
+                    <div class="product-info">
+                        <div class="product-title">${product.name}</div>
+                        <div class="product-price">₹${product.price}</div>
+                        <button class="add-to-cart" onclick="addToCart('${product.id}')">Add to Cart</button>
+                        <a href="${product.link || '#'}" target="_blank" class="product-link">Shop Now</a>
+                    </div>
+                </div>
+            `;
+        });
+    }
+
+    window.filterProducts = function(category) {
+        currentCategory = category;
+        document.querySelectorAll('.cat-btn').forEach(btn => btn.classList.remove('active'));
+        document.querySelectorAll('.cat-btn').forEach(btn => {
+            if(btn.innerText.toLowerCase().includes(category.toLowerCase())) btn.classList.add('active');
+        });
+
+        if(category === 'All') {
+            displayProducts(products);
+        } else {
+            const filtered = products.filter(p => p.category && p.category.toLowerCase() === category.toLowerCase());
+            displayProducts(filtered);
+        }
+    }
+
+    window.selectCategory = function(categoryName) {
+        toggleCategoryModal();
+        filterProducts(categoryName);
+        document.getElementById('shop').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    window.searchProducts = function() {
+        const query = document.getElementById('searchInput').value.toLowerCase();
+        const filtered = products.filter(p => p.name.toLowerCase().includes(query) || p.category.toLowerCase().includes(query));
+        displayProducts(filtered);
+    }
+
+    window.sortProducts = function() {
+        const sortBy = document.getElementById('sortSelect').value;
+        let sortedList = [...products];
+        if (sortBy === 'low-high') sortedList.sort((a, b) => a.price - b.price);
+        else if (sortBy === 'high-low') sortedList.sort((a, b) => b.price - a.price);
+        displayProducts(sortedList);
+    }
+
+    window.toggleAdminPanel = function() {
+        let panel = document.getElementById('adminPanel');
+        if(!panel.classList.contains('active')) {
+            let password = prompt("Enter Admin Password to Add Product:");
+            if(password !== "1234") {
+                if(password !== null) alert("Incorrect Password!");
+                return;
+            }
+        }
+        panel.classList.toggle('active');
+    }
+    
+    window.addNewProduct = async function() {
+    const name = document.getElementById('prodName').value.trim();
+    const category = document.getElementById('prodCategory').value;
+    const priceField = document.getElementById('prodPrice').value;
+    const price = Number(priceField);
+    const image = document.getElementById('prodImage').value.trim();
+    const link = document.getElementById('prodLink').value.trim() || '#';
+
+    // Validation check (agar koi field khali ho)
+    if(!name || priceField === '' || !image) {
+        showToast("Please fill all required product details!", "error");
+        return;
+    }
+
+    // Ek temporary ID ke sath naya product object banayein
+    const newProd = { 
+        id: 'local_' + Date.now(), 
+        name, 
+        category, 
+        price, 
+        image, 
+        link 
+    };
+
+    // 1. LOCAL-FIRST: Turant array mein daal kar UI update karo aur toast dikhao
+    products.push(newProd);
+      localStorage.setItem('mintunex_products', JSON.stringify(products));
+    filterProducts(currentCategory);
+    showToast("Product published successfully!", "success");
+
+    // 2. Form fields clear karo aur admin panel band karo
+    document.getElementById('prodName').value = '';
+    document.getElementById('prodPrice').value = '';
+    document.getElementById('prodImage').value = '';
+    document.getElementById('prodLink').value = '';
+    toggleAdminPanel();
+
+    // 3. BACKGROUND SYNC: Firebase Cloud par save karne ki koshish background mein karega
+    try {
+        const docRef = await addDoc(collection(db, "products"), { name, category, price, image, link });
+        newProd.id = docRef.id; // Real Cloud ID se replace kar do
+    } catch (e) {
+        console.log("Cloud sync restricted, working in local mode.");
+    }
+}
+
+    window.deleteProduct = async function(productId) {
+        let password = prompt("Enter Admin Password to Delete Product:");
+        if (password !== "1234") {
+            if (password !== null)
+showToast("Incorrect Password!", "error");
+            return;
+        }
+
+        try {
+            await deleteDoc(doc(db, "products", productId));
+        } catch (e) {
+            console.log("Cloud delete skipped, removing locally.");
+        }
+
+        products = products.filter(p => p.id !== productId);
+      localStorage.setItem('mintunex_products', JSON.stringify(products));
+showToast("Product deleted successfully!", "success");
+        filterProducts(currentCategory);
+    }
+
+    window.addToCart = function(productId) {
+        const product = products.find(p => p.id === productId);
+        if(!product) return;
+        const existingItem = cart.find(item => item.id === productId);
+        if(existingItem) existingItem.qty += 1;
+        else cart.push({ ...product, qty: 1 });
+        updateCartUI();
+        toggleCart();
+    }
+
+    window.updateCartUI = function() {
+        const cartCount = document.getElementById('cartCount');
+        const cartItems = document.getElementById('cartItems');
+        const cartTotal = document.getElementById('cartTotal');
+        let totalCount = 0, totalPrice = 0;
+
+        if(!cartItems) return;
+
+        if(cart.length === 0) {
+            cartItems.innerHTML = `<p style="color: #777; text-align: center; margin-top: 40px;">Your cart is empty</p>`;
+        } else {
+            cartItems.innerHTML = "";
+            cart.forEach(item => {
+                totalCount += item.qty;
+                totalPrice += item.price * item.qty;
+                cartItems.innerHTML += `
+                    <div class="cart-item">
+                        <div>
+                            <h4 style="font-size: 14px;">${item.name}</h4>
+                            <span style="font-size: 12px; color: #888;">₹${item.price} × ${item.qty}</span>
+                        </div>
+                        <button onclick="removeFromCart('${item.id}')" style="background:none; border:none; color:red; cursor:pointer;"><i class="fa-solid fa-trash"></i></button>
+                    </div>
+                `;
+            });
+        }
+        if(cartCount) cartCount.innerText = totalCount;
+        if(cartTotal) cartTotal.innerText = `Total: ₹${totalPrice}`;
+        localStorage.setItem('mintunex_cart', JSON.stringify(cart));
+    }
+
+    window.removeFromCart = function(productId) {
+        cart = cart.filter(item => item.id !== productId);
+        updateCartUI();
+    }
+
+    window.toggleCart = function() { document.getElementById('cartModal').classList.toggle('open'); }
+    window.toggleAboutModal = function() { document.getElementById('aboutModal').classList.toggle('open'); }
+    window.toggleCategoryModal = function() { document.getElementById('categoryModal').classList.toggle('open'); }
+    
+    window.showHomePage = function(event) {
+        if(event) event.preventDefault();
+        filterProducts('All');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    window.scrollToShop = function() {
+        document.getElementById('shop').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    window.checkout = function() {
+        if(cart.length === 0) {
+showToast("Your cart is empty!", "error");
+  return; }
+        alert("Order placed successfully! Thank you for shopping with MINTUNEX.");
+        cart = [];
+        updateCartUI();
+        toggleCart();
+    }
+    // Sleek Toast Notification Function
+function showToast(message, type = 'success') {
+    let container = document.getElementById('toast-container');
+    
+    // Agar container nahi hai toh body mein automatically bana dega
+    if (!container) {
+        container = document.createElement('div');
+        container.id = 'toast-container';
+        document.body.appendChild(container);
+    }
+
+    const toast = document.createElement('div');
+    toast.className = `toast ${type}`;
+    
+    let icon = type === 'success' 
+        ? '<i class="fa-solid fa-circle-check" style="color: #4ade80; font-size: 15px;"></i>' 
+        : '<i class="fa-solid fa-circle-exclamation" style="color: #f87171; font-size: 15px;"></i>';
+    
+    toast.innerHTML = `${icon} <span>${message}</span>`;
+    container.appendChild(toast);
+
+    // 2.5 second ke baad DOM se element remove kar dega
+    setTimeout(() => {
+        toast.remove();
+    }, 2500);
+}
+
+</script>
+
+</body>
+</html>
