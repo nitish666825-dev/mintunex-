@@ -449,7 +449,10 @@
             <h4 id="cartTotal">Total: ₹0</h4>
             <button class="checkout-btn" onclick="checkout()">Proceed to Checkout</button>
         </div>
+      <div>
+      <button onclick="openCheckoutModal()" style="width: 100%; padding: 12px; background: #000; color: #fff; border: none; border-radius: 6px; cursor: pointer; font-weight: 600;">Proceed to Checkout</button>
     </div>
+  </div>
 
     <!-- About Us Modal -->
     <div class="about-modal" id="aboutModal">
@@ -511,6 +514,30 @@
             </div>
         </div>
     </div>
+   <!-- Checkout Modal -->
+<div id="checkoutModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:1000; align-items:center; justify-content:center;">
+    <div style="background:#fff; padding:25px; border-radius:12px; width:90%; max-width:400px; box-shadow:0 4px 20px rgba(0,0,0,0.15);">
+        <h3 style="margin-bottom: 15px; font-size: 20px; font-weight: 600;">Shipping Details</h3>
+        <form id="checkoutForm" onsubmit="handleCheckout(event)">
+            <div style="margin-bottom: 12px;">
+                <label style="display:block; font-size: 13px; margin-bottom: 4px; color:#555;">Full Name</label>
+                <input type="text" id="custName" required style="width:100%; padding:9px 12px; border:1px solid #ddd; border-radius:6px; font-size:14px; outline:none;">
+            </div>
+            <div style="margin-bottom: 12px;">
+                <label style="display:block; font-size: 13px; margin-bottom: 4px; color:#555;">Phone Number</label>
+                <input type="tel" id="custPhone" required style="width:100%; padding:9px 12px; border:1px solid #ddd; border-radius:6px; font-size:14px; outline:none;">
+            </div>
+            <div style="margin-bottom: 18px;">
+                <label style="display:block; font-size: 13px; margin-bottom: 4px; color:#555;">Delivery Address</label>
+                <textarea id="custAddress" required rows="3" style="width:100%; padding:9px 12px; border:1px solid #ddd; border-radius:6px; font-size:14px; resize:none; outline:none;"></textarea>
+            </div>
+            <div style="display: flex; gap: 10px;">
+                <button type="button" onclick="closeCheckoutModal()" style="flex:1; padding:10px; background:#f4f4f4; border:none; border-radius:6px; cursor:pointer; font-weight:600; color:#333;">Cancel</button>
+                <button type="submit" style="flex:1; padding:10px; background:#000; color:#fff; border:none; border-radius:6px; cursor:pointer; font-weight:600;">Place Order</button>
+            </div>
+        </form>
+    </div>
+</div>
 
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
@@ -718,36 +745,44 @@ showToast("Product deleted successfully!", "success");
         toggleCart();
     }
 
-    window.updateCartUI = function() {
-        const cartCount = document.getElementById('cartCount');
-        const cartItems = document.getElementById('cartItems');
-        const cartTotal = document.getElementById('cartTotal');
-        let totalCount = 0, totalPrice = 0;
+window.updateCartUI = function() {
+    const cartCount = document.getElementById('cartCount');
+    const cartItems = document.getElementById('cartItems');
+    const cartTotal = document.getElementById('cartTotal');
+    let totalCount = 0, totalPrice = 0;
 
-        if(!cartItems) return;
+    if (!cartItems) return;
 
-        if(cart.length === 0) {
-            cartItems.innerHTML = `<p style="color: #777; text-align: center; margin-top: 40px;">Your cart is empty</p>`;
-        } else {
-            cartItems.innerHTML = "";
-            cart.forEach(item => {
-                totalCount += item.qty;
-                totalPrice += item.price * item.qty;
-                cartItems.innerHTML += `
-                    <div class="cart-item">
-                        <div>
-                            <h4 style="font-size: 14px;">${item.name}</h4>
-                            <span style="font-size: 12px; color: #888;">₹${item.price} × ${item.qty}</span>
-                        </div>
-                        <button onclick="removeFromCart('${item.id}')" style="background:none; border:none; color:red; cursor:pointer;"><i class="fa-solid fa-trash"></i></button>
+    if (cart.length === 0) {
+        cartItems.innerHTML = `<p style="color: #777; text-align: center; margin-top: 40px;">Your cart is empty</p>`;
+    } else {
+        cartItems.innerHTML = "";
+        cart.forEach(item => {
+            totalCount += item.qty;
+            totalPrice += item.price * item.qty;
+            cartItems.innerHTML += `
+                <div class="cart-item" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px solid #eee;">
+                    <div>
+                        <h4 style="font-size: 14px; margin-bottom: 2px;">${item.name}</h4>
+                        <span style="font-size: 12px; color: #888;">₹${item.price}</span>
                     </div>
-                `;
-            });
-        }
-        if(cartCount) cartCount.innerText = totalCount;
-        if(cartTotal) cartTotal.innerText = `Total: ₹${totalPrice}`;
-        localStorage.setItem('mintunex_cart', JSON.stringify(cart));
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <div class="cart-qty-controls" style="display: flex; align-items: center; gap: 6px; background: #f4f4f4; padding: 3px 6px; border-radius: 4px;">
+                            <button onclick="decreaseQty('${item.id}')" style="background:#fff; border:1px solid #ddd; width:22px; height:22px; border-radius:3px; cursor:pointer; font-weight:bold;">-</button>
+                            <span style="font-size: 13px; font-weight: 600;">${item.qty}</span>
+                            <button onclick="increaseQty('${item.id}')" style="background:#fff; border:1px solid #ddd; width:22px; height:22px; border-radius:3px; cursor:pointer; font-weight:bold;">+</button>
+                        </div>
+                        <button onclick="removeFromCart('${item.id}')" style="background: none; border: none; color: #ff4d4d; cursor: pointer; font-size: 12px;">✕</button>
+                    </div>
+                </div>
+            `;
+        });
     }
+    if (cartCount) cartCount.innerText = totalCount;
+    if (cartTotal) cartTotal.innerText = `Total: ₹${totalPrice}`;
+    localStorage.setItem('mintunex_cart', JSON.stringify(cart));
+};
+
 
     window.removeFromCart = function(productId) {
         cart = cart.filter(item => item.id !== productId);
@@ -803,8 +838,77 @@ function showToast(message, type = 'success') {
         toast.remove();
     }, 2500);
 }
+    // 1. Quantity Badhane ke liye (+)
+window.increaseQty = function(productId) {
+    const item = cart.find(i => i.id === productId);
+    if (item) {
+        item.qty += 1;
+        localStorage.setItem('mintunex_cart', JSON.stringify(cart));
+        updateCartUI();
+    }
+};
+
+// 2. Quantity Ghatane ke liye (-)
+window.decreaseQty = function(productId) {
+    const index = cart.findIndex(i => i.id === productId);
+    if (index > -1) {
+        if (cart[index].qty > 1) {
+            cart[index].qty -= 1;
+        } else {
+            // Agar quantity 1 hai aur user '-' dabata hai, toh item cart se hat jayega
+            cart.splice(index, 1);
+        }
+        localStorage.setItem('mintunex_cart', JSON.stringify(cart));
+        updateCartUI();
+    }
+};
+// Checkout Modal Kholne ke liye
+window.openCheckoutModal = function() {
+    if (cart.length === 0) {
+        alert("Your cart is empty!");
+        return;
+    }
+    const checkoutModal = document.getElementById('checkoutModal');
+    if (checkoutModal) checkoutModal.style.display = 'flex';
+};
+
+// Checkout Modal Band karne ke liye
+window.closeCheckoutModal = function() {
+    const checkoutModal = document.getElementById('checkoutModal');
+    if (checkoutModal) checkoutModal.style.display = 'none';
+};
+
+// Order Submit Hone par
+window.handleCheckout = function(e) {
+    e.preventDefault();
+    const name = document.getElementById('custName').value;
+    const phone = document.getElementById('custPhone').value;
+    const address = document.getElementById('custAddress').value;
+
+    if (!name || !phone || !address) {
+        alert("Please fill in all details.");
+        return;
+    }
+
+    alert(`🎉 Thank you for your order, ${name}! Your order has been placed successfully and will be shipped soon.`);
+    
+    // Cart Khali karna
+    cart = [];
+    localStorage.setItem('mintunex_cart', JSON.stringify(cart));
+    updateCartUI();
+    
+    // Form Reset aur Modal Close karna
+    document.getElementById('checkoutForm').reset();
+    closeCheckoutModal();
+    
+    // Agar cart modal bhi khula ho toh use band karne ke liye:
+    const cartModal = document.getElementById('cartModal');
+    if (cartModal) cartModal.classList.remove('open');
+};
+
 
 </script>
 
 </body>
 </html>
+
