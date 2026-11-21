@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <link rel="icon" type="image/png" href="https://i.postimg.cc/Hx5L4f5v/1794801180615.png">
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MINTUNEX | MN Enterprises</title>
@@ -8,6 +10,10 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
+      html {
+    scroll-behavior: smooth;
+}
+
         * {
             margin: 0;
             padding: 0;
@@ -229,6 +235,119 @@
       .toast.error { border-left: 4px solid #f87171; }
       @keyframes slideInUp { to { opacity: 1; transform: translateY(0); } }
       @keyframes fadeOutDown { from { opacity: 1; transform: translateY(0); } to { opacity: 0; transform: translateY(20px); } }
+      /* ==========================================
+   MINIMALIST LUXURY FOOTER STYLING
+   ========================================== */
+.site-footer {
+    background-color: #2c2a29;
+    color: #faf9f6;
+    padding: 50px 5% 20px;
+    margin-top: 40px;
+}
+
+.footer-grid {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 35px;
+    padding-bottom: 35px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.footer-brand h3 {
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    color: #fff;
+    margin-bottom: 4px;
+}
+
+.footer-brand .sub-brand {
+    font-size: 12px;
+    color: #bfa181;
+    margin-bottom: 14px;
+    font-weight: 500;
+}
+
+.footer-brand p {
+    font-size: 13px;
+    color: #ccc;
+    line-height: 1.6;
+}
+
+.footer-col h4 {
+    font-size: 15px;
+    font-weight: 600;
+    color: #bfa181;
+    margin-bottom: 15px;
+}
+
+.footer-col ul {
+    list-style: none;
+}
+
+.footer-col ul li {
+    margin-bottom: 10px;
+}
+
+.footer-col ul li a {
+    text-decoration: none;
+    color: #ddd;
+    font-size: 13px;
+    transition: color 0.3s;
+    cursor: pointer;
+}
+
+.footer-col ul li a:hover {
+    color: #bfa181;
+}
+
+.footer-socials {
+    display: flex;
+    gap: 12px;
+    margin-top: 15px;
+}
+
+.footer-socials a {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.08);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    font-size: 14px;
+    transition: all 0.3s;
+}
+
+.footer-socials a:hover {
+    background: #bfa181;
+    transform: translateY(-3px);
+}
+
+.footer-bottom {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-top: 20px;
+    text-align: center;
+    font-size: 12px;
+    color: #aaa;
+}
+      .product-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.35s ease;
+}
+
+.product-card:hover .product-image {
+    transform: scale(1.04);
+}
+
+
     </style>
 </head>
 <body>
@@ -241,15 +360,20 @@
         <span style="font-size: 20px; font-weight: 600; letter-spacing: 0.5px; color: #2c2a29;">MINTUNEX</span>
         <p style="font-size: 11px; color: #777; margin: 0; font-weight: 400;">MN Enterprises</p>
     </div>
-        </div>
+</div>
+
         <ul class="nav-links">
             <li><a href="#" onclick="showHomePage()"><i class="fa-solid fa-house"></i> Home</a></li>
             <li><a href="#shop" class="shop-highlight-btn"><i class="fa-solid fa-bag-shopping"></i> Shop</a></li>
             <li><a href="#" onclick="toggleCategoryModal()"><i class="fa-solid fa-list"></i> Category</a></li>
             <li><a href="#" onclick="toggleAboutModal()"><i class="fa-solid fa-circle-info"></i> About Us</a></li>
+          <select id="currencySelect" onchange="changeCurrency(this.value)" style="padding: 5px 10px; border: 1px solid #ddd; border-radius: 20px; background: #fff; color: #2c2a29; font-size: 9px; font-weight: 500; cursor: pointer; outline: none;">
+    <option value="INR">₹ INR</option>
+    <option value="USD">$ USD</option>
+</select>
+
         </ul>
         <div class="nav-right">
-            <button class="admin-toggle-btn" onclick="toggleAdminPanel()">+ Add Product</button>
             <div class="nav-icons" onclick="toggleCart()">
                 <i class="fa-solid fa-bag-shopping"></i>
                 <span class="cart-count" id="cartCount">0</span>
@@ -302,6 +426,10 @@
                 <option value="high-low">Price: High to Low</option>
             </select>
         </div>
+      <button onclick="resetFilters()" style="padding: 12px 18px; border: 1px solid #ddd; border-radius: 30px; background: #fff; color: #2c2a29; font-size: 13px; cursor: pointer; display: flex; align-items: center; gap: 6px;">
+    <i class="fa-solid fa-rotate-left" style="color: #bfa181;"></i> Reset
+</button>
+
     </div>
 
     <!-- Categories Filter Bar -->
@@ -411,7 +539,92 @@
             </form>
         </div>
     </div>
+  <!-- Product Quick View / Detail Modal -->
+<div id="productDetailModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); z-index:2000; align-items:center; justify-content:center; padding: 15px;">
+    <div style="background:#fff; border-radius:12px; width:100%; max-width:650px; overflow:hidden; box-shadow:0 10px 30px rgba(0,0,0,0.2); position:relative; display:flex; flex-direction:column;">
+        
+        <!-- Close Button -->
+        <button onclick="closeProductDetail()" style="position:absolute; top:12px; right:12px; background:rgba(0,0,0,0.6); color:#fff; border:none; width:32px; height:32px; border-radius:50%; cursor:pointer; font-size:16px; z-index:10;">
+            <i class="fa-solid fa-xmark"></i>
+        </button>
 
+        <div style="display:flex; flex-wrap:wrap;">
+            <!-- Left: Product Image -->
+            <div style="flex:1; min-width:260px; background:#faf9f6;">
+                <img id="detailImg" src="" alt="Product" style="width:100%; height:320px; object-fit:cover; display:block;">
+            </div>
+
+            <!-- Right: Product Info -->
+            <div style="flex:1; min-width:260px; padding:25px; display:flex; flex-direction:column; justify-content:space-between;">
+                <div>
+                    <span id="detailCategory" style="background:#2c2a29; color:#fff; font-size:10px; padding:4px 10px; border-radius:4px; text-transform:uppercase; letter-spacing:0.5px;">Category</span>
+                    <h2 id="detailTitle" style="font-size:20px; font-weight:600; color:#2c2a29; margin:12px 0 6px;">Product Name</h2>
+                    <div id="detailPrice" style="font-size:18px; font-weight:600; color:#bfa181; margin-bottom:14px;">₹0</div>
+                    <p id="detailDesc" style="font-size:13px; color:#666; line-height:1.6; margin-bottom:20px;">
+                        Elevate your space with this curated minimalist piece from MINTUNEX. Crafted with premium aesthetics and durability in mind.
+                    </p>
+                </div>
+
+                <div style="display:flex; flex-direction:column; gap:10px;">
+                    <button id="detailAddToCartBtn" style="background:#2c2a29; color:#fff; border:none; padding:11px; border-radius:6px; cursor:pointer; font-size:13px; font-weight:500;">
+                        <i class="fa-solid fa-bag-shopping" style="margin-right:6px;"></i> Add to Cart
+                    </button>
+                    <a id="detailShopNowBtn" href="#" target="_blank" style="display:block; text-align:center; background:#bfa181; color:#fff; text-decoration:none; padding:11px; border-radius:6px; font-size:13px; font-weight:500;">
+                        Buy Now <i class="fa-solid fa-arrow-up-right-from-square" style="margin-left:5px; font-size:11px;"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer class="site-footer">
+    <div class="footer-grid">
+        <div class="footer-brand">
+            <h3>MINTUNEX</h3>
+            <div class="sub-brand">MN Enterprises</div>
+            <p>Curated minimalist home decor, modern lighting, and aesthetic lifestyle essentials designed to elevate your everyday living space.</p>
+            <div class="footer-socials">
+                <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                <a href="#" aria-label="Pinterest"><i class="fa-brands fa-pinterest-p"></i></a>
+                <a href="#" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+            </div>
+        </div>
+
+        <div class="footer-col">
+            <h4>Quick Links</h4>
+            <ul>
+                <li><a onclick="showHomePage(event)">Home</a></li>
+                <li><a href="#shop">Shop Collection</a></li>
+                <li><a onclick="toggleCategoryModal()">Browse Categories</a></li>
+                <li><a onclick="toggleAboutModal()">About Us</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-col">
+            <h4>Categories</h4>
+            <ul>
+                <li><a onclick="filterProducts('Vases'); scrollToShop();">Aesthetic Vases</a></li>
+                <li><a onclick="filterProducts('Lighting'); scrollToShop();">Modern Lighting</a></li>
+                <li><a onclick="filterProducts('Wall Art'); scrollToShop();">Minimalist Wall Art</a></li>
+                <li><a onclick="filterProducts('Electronics'); scrollToShop();">Smart Electronics</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-col">
+            <h4>Customer Care</h4>
+            <ul>
+                <li><a onclick="toggleCart()">View Shopping Cart</a></li>
+                <li><a onclick="toggleAboutModal()">Shipping & Quality Promise</a></li>
+                <li><a href="mailto:support@mintunex.com">support@mintunex.com</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="footer-bottom">
+        &copy; 2026 MINTUNEX | MN Enterprises. All Rights Reserved.
+    </div>
+</footer>
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
     import { getFirestore, collection, getDocs, addDoc, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
@@ -430,7 +643,7 @@
 
     // Default Products (agar localstorage khali ho)
     const defaultProducts = [
-        { id: "1", name: "Minimalist Ceramic Vase", category: "Vases", price: 1299, image: "https://images.unsplash.com/photo-1581783342308-f792dbdd27c5?auto=format&fit=crop&w=600&q=80", link: "#" },
+        { id: "1", name: "Minimalist Ceramic Vase", category: "Vases", price: 1299, image:"https://images.unsplash.com/photo-1581783342308-f792dbdd27c5?auto=format&fit=crop&w=600&q=80", link: "#", desc: "Handcrafted minimalist matte ceramic vase, ideal for dried pampas grass, fresh stems, or standalone shelf styling." },
         { id: "2", name: "Nordic Wooden Table Lamp", category: "Lighting", price: 1899, image: "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=600&q=80", link: "#" },
         { id: "3", name: "Abstract Canvas Wall Art", category: "Wall Art", price: 2499, image: "https://images.unsplash.com/photo-1538688525198-9b88f6f53126?auto=format&fit=crop&w=600&q=80", link: "#" }
     ];
@@ -448,6 +661,37 @@
         updateCartUI();
         fetchProductsFromCloud(); 
     });
+    let currentCurrency = localStorage.getItem('mintunex_currency') || 'INR';
+const INR_TO_USD_RATE = 0.012; // Approx conversion rate (1 INR ≈ $0.012)
+
+function formatPrice(priceInINR) {
+    const numPrice = Number(priceInINR) || 0;
+    if (currentCurrency === 'USD') {
+        const usdValue = (numPrice * INR_TO_USD_RATE).toFixed(2);
+        return `$${usdValue}`;
+    }
+    return `₹${numPrice.toLocaleString('en-IN')}`;
+}
+
+window.changeCurrency = function(selectedCurrency) {
+    currentCurrency = selectedCurrency;
+    localStorage.setItem('mintunex_currency', currentCurrency);
+
+    // Product grid, cart aur detail modal (agar khula ho) sabko update karo
+    filterProducts(currentCategory);
+    updateCartUI();
+
+    const detailModal = document.getElementById('productDetailModal');
+    if (detailModal && detailModal.style.display === 'flex' && window.activeDetailProductId) {
+        const activeProd = products.find(p => p.id === window.activeDetailProductId);
+        if (activeProd) {
+            document.getElementById('detailPrice').innerText = formatPrice(activeProd.price);
+        }
+    }
+
+    showToast(`Currency switched to ${currentCurrency === 'USD' ? 'USD ($)' : 'INR (₹)'}`, "success");
+};
+
 
     // Cloud se fetch karke sync karna
     async function fetchProductsFromCloud() {
@@ -476,20 +720,39 @@
             grid.innerHTML = `<p style="grid-column: 1/-1; text-align: center; color: #777; padding: 40px;">No products found.</p>`;
             return;
         }
+      window.resetFilters = function() {
+    // 1. Search box khali karo
+    const searchInput = document.getElementById('searchInput');
+    if (searchInput) searchInput.value = '';
+
+    // 2. Sort dropdown ko default par lao
+    const sortSelect = document.getElementById('sortSelect');
+    if (sortSelect) sortSelect.value = 'default';
+
+    // 3. Category ko 'All' par reset karo
+    filterProducts('All');
+    
+    // 4. Ek chota sa feedback toast dikhao
+    showToast("All filters reset!", "success");
+};
+
 
         filteredProducts.forEach(product => {
             grid.innerHTML += `
                 <div class="product-card">
-                    <div class="product-image-container">
+                    <div class="product-image-container"
+                    onclick="openProductDetail('${product.id}')"
+                    style="cursor:pointer;">
                         <span class="product-badge">${product.category}</span>
-                        <img src="${product.image}" alt="${product.name}" class="product-image">
-                        <button class="delete-btn" onclick="deleteProduct('${product.id}')" title="Delete Product" style="position: absolute; top: 10px; right: 10px; background: rgba(0,0,0,0.6); color: #fff; border: none; width: 30px; height: 30px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 12px; z-index: 10;" onmouseover="this.style.background='#ff4d4d'" onmouseout="this.style.background='rgba(0,0,0,0.6)'">
-                            <i class="fa-solid fa-trash"></i>
-                        </button>
+                        <img src="${product.image}" alt="${product.name}" class="product-image"
+                        class="product-image" onerror="this.onerror=null; this.src='logo.png';">
+                      
+                
                     </div>
                     <div class="product-info">
-                        <div class="product-title">${product.name}</div>
-                        <div class="product-price">₹${product.price}</div>
+                        <div class="product-title" onclick="openProductDetail('${product.id}')" 
+                        style="cursor:pointer;"> ${product.name}</div>
+                        <div class="product-price">${formatPrice(product.price)}</div>
                         <button class="add-to-cart" onclick="addToCart('${product.id}')">Add to Cart</button>
                         <a href="${product.link || '#'}" target="_blank" class="product-link">Shop Now</a>
                     </div>
@@ -536,7 +799,7 @@
     window.toggleAdminPanel = function() {
         let panel = document.getElementById('adminPanel');
         if(!panel.classList.contains('active')) {
-            let password = prompt("Enter Admin Password to Add Product:");
+            let password = prompt("Enter Admin Password to Add Product:");style="display: none !important;"
             if(password !== "1234") {
                 if(password !== null) alert("Incorrect Password!");
                 return;
@@ -588,7 +851,7 @@
     }
 
     window.deleteProduct = async function(productId) {
-        let password = prompt("Enter Admin Password to Delete Product:");
+        let password = prompt("Enter Admin Password to Delete Product:");style="display: none !important;"
         if (password !== "1234") {
             if (password !== null) showToast("Incorrect Password!", "error");
             return;
@@ -635,7 +898,7 @@
                     <div class="cart-item">
                         <div>
                             <h4 style="font-size: 14px; margin-bottom: 2px;">${item.name}</h4>
-                            <span style="font-size: 12px; color: #888;">₹${item.price}</span>
+                            <span style="font-size: 12px; color: #888;">${formatPrice(item.price)}</span>
                         </div>
                         <div style="display: flex; align-items: center; gap: 10px;">
                             <div style="display: flex; align-items: center; gap: 6px; background: #f4f4f4; padding: 3px 6px; border-radius: 4px;">
@@ -650,7 +913,7 @@
             });
         }
         if (cartCount) cartCount.innerText = totalCount;
-        if (cartTotal) cartTotal.innerText = `Total: ₹${totalPrice}`;
+        if (cartTotal) cartTotal.innerText = `Total: ${formatPrice(totalPrice)}`;
         localStorage.setItem('mintunex_cart', JSON.stringify(cart));
     };
 
@@ -747,8 +1010,48 @@
         const cartModal = document.getElementById('cartModal');
         if (cartModal) cartModal.classList.remove('open');
     };
+  
+// Product Detail Modal Open
+window.openProductDetail = function(productId) {
+    const product = products.find(p => p.id === productId);
+    if (!product) return;
+
+    document.getElementById('detailImg');detailImg.onerror = function() {
+    this.onerror = null;
+    this.src = 'https://i.postimg.cc/Hx5L4f5v/1794801180615.png';
+};
+detailImg.src = product.image;
+    document.getElementById('detailCategory').innerText = product.category;
+    document.getElementById('detailTitle').innerText = product.name;
+    document.getElementById('detailPrice').innerText = formatPrice(product.price);
+    
+    // Add to Cart button action
+    const addBtn = document.getElementById('detailAddToCartBtn');
+    addBtn.onclick = function() {
+        addToCart(product.id);
+        closeProductDetail();
+    };
+
+    // Shop Now link
+    const shopBtn = document.getElementById('detailShopNowBtn');
+    shopBtn.href = product.link || '#';
+
+    document.getElementById('productDetailModal').style.display = 'flex';
+};
+
+// Product Detail Modal Close
+window.closeProductDetail = function() {
+    document.getElementById('productDetailModal').style.display = 'none';
+};
+document.addEventListener("click", (event) => {
+    const detailModal = document.getElementById('productDetailModal');
+    if (detailModal && event.target === detailModal) {
+        closeProductDetail();
+    }
+});
+
+
   </script>
 </body>
 </html>
-
 
