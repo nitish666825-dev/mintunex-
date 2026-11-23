@@ -421,7 +421,7 @@
                 <select id="prodCategory">
                     <option value="Vases">Home Decor</option>
                     <option value="Lighting">Lighting</option>
-                    <option value="Wall Art">Wall Art</option>
+                    <option value="Wall Art">Arts</option>
                     <option value="Electronics">Electronics</option>
                     <option value="Beauty products">Beauty products</option>
                 </select>
@@ -466,9 +466,9 @@
     <!-- Categories Filter Bar -->
     <div class="categories" id="categoryContainer">
         <button class="cat-btn active" onclick="filterProducts('All')">All Products</button>
-        <button class="cat-btn" onclick="filterProducts('Vases')">Vases</button>
+        <button class="cat-btn" onclick="filterProducts('Vases')">Home Decor</button>
         <button class="cat-btn" onclick="filterProducts('Lighting')">Lighting</button>
-        <button class="cat-btn" onclick="filterProducts('Wall Art')">Wall Art</button>
+        <button class="cat-btn" onclick="filterProducts('Wall Art')">Arts</button>
         <button class="cat-btn" onclick="filterProducts('Electronics')">Electronics</button>
         <button class="cat-btn" onclick="filterProducts('Beauty products')">Beauty products</button>
     </div>
@@ -527,9 +527,9 @@
                     <h4>Lighting</h4>
                     <p>Nordic table lamps & modern pendant lights.</p>
                 </div>
-                <div class="cat-item-card" onclick="selectCategory('Wall Art')">
+                <div class="cat-item-card" onclick="selectCategory('Arts')">
                     <i class="fa-solid fa-image"></i>
-                    <h4>Wall Art</h4>
+                    <h4>Arts</h4>
                     <p>Abstract canvas paintings & minimalist frames.</p>
                 </div>
                 <div class="cat-item-card" onclick="selectCategory('Electronics')">
@@ -637,9 +637,9 @@
             <ul>
                 <li><a onclick="filterProducts('Home Decor'); scrollToShop();">Asthetic House</a></li>
                 <li><a onclick="filterProducts('Lighting'); scrollToShop();">Modern Lighting</a></li>
-                <li><a onclick="filterProducts('Wall Art'); scrollToShop();">Minimalist Wall Art</a></li>
+                <li><a onclick="filterProducts('Arts'); scrollToShop();">Minimalist Arts</a></li>
                 <li><a onclick="filterProducts('Electronics'); scrollToShop();">Smart Electronics</a></li>
-              <li><a onclick="filterProducts('Electronics'); scrollToShop();">Beauty Products</a></li>
+              <li><a onclick="filterProducts('Beauty Products'); scrollToShop();">Beauty Products</a></li>
             </ul>
         </div>
 
@@ -677,7 +677,7 @@
     const defaultProducts = [
         { id: "1", name: "Minimalist Ceramic Vase", category: "Home Decor", price: 1299, image:"https://images.unsplash.com/photo-1581783342308-f792dbdd27c5?auto=format&fit=crop&w=600&q=80", link: "#", desc: "Handcrafted minimalist matte ceramic vase, ideal for dried pampas grass, fresh stems, or standalone shelf styling." },
         { id: "2", name: "Nordic Wooden Table Lamp", category: "Lighting", price: 1899, image: "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=600&q=80", link: "#" },
-        { id: "3", name: "Abstract Canvas Wall Art", category: "Wall Art", price: 2499, image: "https://images.unsplash.com/photo-1538688525198-9b88f6f53126?auto=format&fit=crop&w=600&q=80", link: "#" }
+        { id: "3", name: "Abstract Canvas Wall Art", category: "Arts", price: 2499, image: "https://images.unsplash.com/photo-1538688525198-9b88f6f53126?auto=format&fit=crop&w=600&q=80", link: "#" }
     ];
 
     // LocalStorage se products load karna taaki refresh hone par gayab na ho
