@@ -419,7 +419,7 @@
             <div class="admin-form-group"><input type="text" id="prodName" placeholder="Product Name"></div>
             <div class="admin-form-group">
                 <select id="prodCategory">
-                    <option value="Vases">Vases</option>
+                    <option value="Vases">Home Decor</option>
                     <option value="Lighting">Lighting</option>
                     <option value="Wall Art">Wall Art</option>
                     <option value="Electronics">Electronics</option>
@@ -517,9 +517,9 @@
                 <i class="fa-solid fa-xmark close-cat-modal" onclick="toggleCategoryModal()"></i>
             </div>
             <div class="cat-body-grid">
-                <div class="cat-item-card" onclick="selectCategory('Vases')">
-                    <i class="fa-solid fa-wine-bottle"></i>
-                    <h4>Vases</h4>
+                <div class="cat-item-card" onclick="selectCategory('Home Decor')">
+                    <i class="fa-solid fa-house"></i>
+                    <h4>Home Decor</h4>
                     <p>Aesthetic ceramic & glass vases for home decor.</p>
                 </div>
                 <div class="cat-item-card" onclick="selectCategory('Lighting')">
@@ -635,10 +635,11 @@
         <div class="footer-col">
             <h4>Categories</h4>
             <ul>
-                <li><a onclick="filterProducts('Vases'); scrollToShop();">Aesthetic Vases</a></li>
+                <li><a onclick="filterProducts('Home Decor'); scrollToShop();">Asthetic House</a></li>
                 <li><a onclick="filterProducts('Lighting'); scrollToShop();">Modern Lighting</a></li>
                 <li><a onclick="filterProducts('Wall Art'); scrollToShop();">Minimalist Wall Art</a></li>
                 <li><a onclick="filterProducts('Electronics'); scrollToShop();">Smart Electronics</a></li>
+              <li><a onclick="filterProducts('Electronics'); scrollToShop();">Beauty Products</a></li>
             </ul>
         </div>
 
@@ -674,7 +675,7 @@
 
     // Default Products (agar localstorage khali ho)
     const defaultProducts = [
-        { id: "1", name: "Minimalist Ceramic Vase", category: "Vases", price: 1299, image:"https://images.unsplash.com/photo-1581783342308-f792dbdd27c5?auto=format&fit=crop&w=600&q=80", link: "#", desc: "Handcrafted minimalist matte ceramic vase, ideal for dried pampas grass, fresh stems, or standalone shelf styling." },
+        { id: "1", name: "Minimalist Ceramic Vase", category: "Home Decor", price: 1299, image:"https://images.unsplash.com/photo-1581783342308-f792dbdd27c5?auto=format&fit=crop&w=600&q=80", link: "#", desc: "Handcrafted minimalist matte ceramic vase, ideal for dried pampas grass, fresh stems, or standalone shelf styling." },
         { id: "2", name: "Nordic Wooden Table Lamp", category: "Lighting", price: 1899, image: "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=600&q=80", link: "#" },
         { id: "3", name: "Abstract Canvas Wall Art", category: "Wall Art", price: 2499, image: "https://images.unsplash.com/photo-1538688525198-9b88f6f53126?auto=format&fit=crop&w=600&q=80", link: "#" }
     ];
